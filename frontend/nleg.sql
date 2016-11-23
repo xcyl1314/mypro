@@ -19,7 +19,7 @@ CREATE TABLE `wechat_user` (
 
 -- 文章表
 create table `posts` (
-post_id int(11) not null auto_increment PRIMARY key,
+post_id bigint(20) not null auto_increment PRIMARY key,
 title varchar(80) not null COMMENT '标题',
 author varchar(30) not null DEFAULT '' COMMENT '作者',
 excerpt varchar(255) not null DEFAULT '' COMMENT '摘要',
@@ -41,3 +41,33 @@ parent_id int(11) not null COMMENT '父栏目id',
 type_name varchar(30) not null COMMENT '栏目名',
 type_sort int(3) not null DEFAULT 100 COMMENT '栏目排序，默认100'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- 评论表
+CREATE TABLE IF NOT EXISTS `comments` (
+  `comment_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `comment_author` tinytext NOT NULL,
+  `comment_author_email` varchar(100) NOT NULL DEFAULT '',
+  `comment_author_url` varchar(200) NOT NULL DEFAULT '',
+  `comment_author_IP` varchar(100) NOT NULL DEFAULT '',
+  `comment_date` int(11) not null DEFAULT 0 COMMENT '评论时间',
+  `comment_content` text NOT NULL comment '评论内容',
+  `comment_status` tinyint(1) not null DEFAULT 0 comment '评论状态：0 待审核，1 通过，2 不通过',
+  `comment_parent` bigint(20) unsigned NOT NULL DEFAULT '0' comment '评论的父评论',
+  `user_id` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`comment_ID`),
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+-- 评论相关表
+CREATE TABLE IF NOT EXISTS `commentmeta` (
+  `commentmeta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `comment_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `meta_key` varchar(255) DEFAULT NULL,
+  `meta_value` longtext,
+  PRIMARY KEY (`meta_id`),
+  KEY `comment_id` (`comment_id`),
+  KEY `meta_key` (`meta_key`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+html:  http://www.bkjia.com/PHPjc/1116239.html
+
