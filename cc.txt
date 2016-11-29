@@ -1,6 +1,0 @@
-n branch            master     -> FETCH_HEAD
-Already up-to-date.
-Already up-to-date.
-Already uphhello
- nello
- n-to-date.
