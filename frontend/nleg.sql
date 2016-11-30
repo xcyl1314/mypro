@@ -12,6 +12,7 @@ CREATE TABLE `wechat_user` (
   `country` varchar(50) NOT NULL COMMENT '国家',
   `province` varchar(50) NOT NULL COMMENT '省份',
   `city` varchar(50) NOT NULL COMMENT '城市',
+  `register_name` int(11) not null DEFAULT 0 comment '用户注册时间',
   `access_token` varchar(255) NOT NULL,
   `refresh_token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
@@ -31,7 +32,11 @@ update_time int(11) not null DEFAULT 0 COMMENT '文章修改时间',
 sort int(3) not null DEFAULT 100 COMMENT '文章排序，默认100',
 iscommend tinyint(1) not null DEFAULT 0 COMMENT '是否推荐，0 不推荐（默认），1 推荐',
 keywords varchar(60) not null DEFAULT '' COMMENT '关键词',
-typeid int(11) not null DEFAULT 0 COMMENT '文章所属栏目，0表示根栏目'
+type_id int(11) not null DEFAULT 0 COMMENT '文章所属栏目，0表示根栏目',
+status int(1) not null DEFAULT 0 comment '文章当前状态：0 公开，1 公开但不允许评论, 2 不公开',
+comment_count int bigint(20) not null DEFAULT 0 comment '文章评论统计',
+view_count int bigint(20) not null DEFAULT 0 comment '文章浏览统计',
+post_sort int(3) not null DEFAULT 100 comment '文章排序'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 栏目表
@@ -47,27 +52,22 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `comment_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `post_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `comment_author` tinytext NOT NULL,
-  `comment_author_email` varchar(100) NOT NULL DEFAULT '',
-  `comment_author_url` varchar(200) NOT NULL DEFAULT '',
-  `comment_author_IP` varchar(100) NOT NULL DEFAULT '',
   `comment_date` int(11) not null DEFAULT 0 COMMENT '评论时间',
   `comment_content` text NOT NULL comment '评论内容',
   `comment_status` tinyint(1) not null DEFAULT 0 comment '评论状态：0 待审核，1 通过，2 不通过',
   `comment_parent` bigint(20) unsigned NOT NULL DEFAULT '0' comment '评论的父评论',
   `user_id` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`comment_ID`),
+  PRIMARY KEY (`comment_ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
--- 评论相关表
-CREATE TABLE IF NOT EXISTS `commentmeta` (
-  `commentmeta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `comment_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `meta_key` varchar(255) DEFAULT NULL,
-  `meta_value` longtext,
-  PRIMARY KEY (`meta_id`),
-  KEY `comment_id` (`comment_id`),
-  KEY `meta_key` (`meta_key`(191))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+-- 管理员表
+create table `admin`(
+admin_id int(3) not null auto_increment PRIMARY key,
+admin_name varchar(30) not null comment '管理员账户',
+admin_pwd char(32) not null comment '管理员密码',
+admin_email varchar(100) not null comment '管理员邮箱',
+login_ip int(10) not null comment '管理员登录ip地址',
+status int(1) not null DEFAULT 0 comment '使用状态：1 使用， 2 停止'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-html:  http://www.bkjia.com/PHPjc/1116239.html
 
