@@ -8,7 +8,7 @@
 	<meta name="description" content="Xenon Boostrap Admin Panel" />
 	<meta name="author" content="" />
 	
-	<title>Xenon - Homepage</title>
+	<title>锁屏</title>
 
 	<link rel="stylesheet" href="http://fonts.useso.com/css?family=Arimo:400,700,400italic">
 	<link rel="stylesheet" href="assets/css/fonts/linecons/css/linecons.css">
@@ -41,11 +41,11 @@
 				<script type="text/javascript">
 					jQuery(document).ready(function($)
 					{
-						// Reveal Login form
+						// 显示登录表单
 						setTimeout(function(){ $(".fade-in-effect").addClass('in'); }, 1);
 						
 						
-						// Clicking on thumbnail will focus on password field
+						// 单击此标签，密码文本框将取得焦点
 						$(".user-thumb a").on('click', function(ev)
 						{
 							ev.preventDefault();
@@ -53,7 +53,7 @@
 						});
 						
 						
-						// Form validation and AJAX request
+						// 表单验证和 AJAX 请求
 						$(".lockcreen-form").validate({
 							rules: {
 								passwd: {
@@ -69,7 +69,7 @@
 							
 							submitHandler: function(form)
 							{
-								show_loading_bar(70); // Fill progress bar to 70% (just a given value)
+								show_loading_bar(70); // 填充进度条到 70% (只要一个给出的值)
 								
 								var $passwd = $(form).find('#passwd'),
 								 	opts = {
@@ -93,7 +93,7 @@
 									dataType: 'json',
 									data: {
 										do_login: true,
-										username: 'demo', // user is known in this case
+										username: 'demo', // 这条件是用户已知的
 										passwd: $passwd.val(),
 									},
 									success: function(resp)
@@ -105,7 +105,7 @@
 												
 												if(resp.accessGranted)
 												{
-													// Redirect after successful login page (when progress bar reaches 100%)
+													// 登陆成功后页面重定向 (当进度条到达 100%)
 													window.location.href = 'dashboard-1.html';
 												}
 												else
@@ -120,7 +120,7 @@
 							}
 						});
 						
-						// Set Form focus
+						// 设置表单焦点
 						$("form#lockscreen .form-group:has(.form-control):first .form-control").focus();
 					});
 				</script>
@@ -134,13 +134,13 @@
 					</div>
 					
 					<div class="form-group">
-						<h3>Welcome back, John!</h3>
-						<p>Enter your password to access the admin.</p>
+						<h3>欢迎回来，XXX!</h3>
+						<p>输入您的密码进入管理界面</p>
 						
 						<div class="input-group">
 							<input type="password" class="form-control input-dark" name="passwd" id="passwd" placeholder="Password" />
 							<span class="input-group-btn">
-								<button type="submit" class="btn btn-primary">Log In</button>
+								<button type="submit" class="btn btn-primary">登 录</button>
 							</span>
 						</div>
 					</div>
